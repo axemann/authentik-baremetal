@@ -45,6 +45,7 @@ add-apt-repository -yP ppa:deadsnakes/ppa && \
 apt upgrade -y
 
 apt install -y \
+  python3.12 \
   python3-virtualenv \
   git \
   pip \
@@ -215,7 +216,7 @@ npm audit fix
 npm audit
 
 # Continue with other build processes
-# npm run build-docs-only
+npm run build
 npm audit fix
 # Ensure all steps are executed without errors
 set -e
