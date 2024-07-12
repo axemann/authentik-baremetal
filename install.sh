@@ -79,6 +79,8 @@ apt install -y \
 rm -f /usr/bin/python3
 ln -s /usr/bin/python3.12 /usr/bin/python3
 
+add-apt-repository -yr deb http://ftp.us.debian.org/debian sid main
+
 if ! su - postgres bash -c "psql -c \"SELECT FROM pg_catalog.pg_roles WHERE rolname = 'authentik';\"" &> /dev/null
 then
   su - postgres -c 'createuser authentik -P && createdb authentik -O authentik exit'
