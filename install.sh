@@ -32,6 +32,7 @@ BASE_DIR=$HOME
 DOTLOCAL=$BASE_DIR/.local
 BIN_DIR="${DOTLOCAL}/bin"
 SRC_DIR=$BASE_DIR/src
+THREADS=$(($(grep 'cpu cores' /proc/cpuinfo | uniq | awk '{print $4}')-1))
 
 mkdir -p "$BIN_DIR"
 PATH="${BIN_DIR}:${PATH}"
@@ -83,7 +84,7 @@ fi
 # 	wget -qO- https://www.python.org/ftp/python/3.12.1/Python-3.12.1.tgz | tar -zxf -
 # 	cd Python-3.12.1
 # 	./configure --enable-optimizations --prefix="$DOTLOCAL"
-# 	make altinstall
+# 	make -j $THREADS altinstall
 # 	cd -
 # 	rm -rf Python-3.12.1
 # 	ln -s "${BIN_DIR}/python3.12" "${BIN_DIR}/python3"
