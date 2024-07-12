@@ -40,17 +40,14 @@ PATH="${BIN_DIR}:${PATH}"
 cd "$BASE_DIR"
 
 apt update && \
-apt install -y \
-  software-properties-common
+# apt install -y \
 # apt remove python3 -y
-add-apt-repository -yP ppa:deadsnakes/ppa && \
+# add-apt-repository -yP ppa:deadsnakes/ppa && \
 apt upgrade -y
 
 apt install -y \
-  python3.12 \
-  python3-virtualenv \
+  software-properties-common
   git \
-  pip \
   wget \
   build-essential \
   redis-server \
@@ -72,6 +69,12 @@ apt install -y \
   libxml2-dev \
   libxmlsec1-dev \
   liblzma-dev
+
+add-apt-repository -y deb http://ftp.us.debian.org/debian sid main
+apt install -y \
+  python3.12 \
+  python3-virtualenv \
+  python3-pip \
 
 rm -f /usr/bin/python3
 ln -s /usr/bin/python3.12 /usr/bin/python3
