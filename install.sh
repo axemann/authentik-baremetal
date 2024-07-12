@@ -41,6 +41,7 @@ cd "$BASE_DIR"
 apt update && \
 apt install -y \
   software-properties-common
+apt remove python3.11 -y
 add-apt-repository -yP ppa:deadsnakes/ppa && \
 apt upgrade -y
 
