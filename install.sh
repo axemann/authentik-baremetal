@@ -40,13 +40,14 @@ PATH="${BIN_DIR}:${PATH}"
 cd "$BASE_DIR"
 
 apt update && \
-# apt install -y \
-#   software-properties-common
+apt install -y \
+  software-properties-common
 # apt remove python3 -y
 add-apt-repository -yP ppa:deadsnakes/ppa && \
 apt upgrade -y
 
 apt install -y \
+  python3.12 \
   python3-virtualenv \
   git \
   pip \
@@ -71,6 +72,9 @@ apt install -y \
   libxml2-dev \
   libxmlsec1-dev \
   liblzma-dev
+
+rm -f /usr/bin/python3
+ln -s /usr/bin/python3.12 /usr/bin/python3
 
 if ! su - postgres bash -c "psql -c \"SELECT FROM pg_catalog.pg_roles WHERE rolname = 'authentik';\"" &> /dev/null
 then
@@ -193,7 +197,7 @@ echo "Reinstalling other requirements..."
 	# Reinstall other requirements from the updated files
 	sed -i 's|django-tenants@ git+https://github.com/rissson/django-tenants.git@a7f37c53f62f355a00142473ff1e3451bb794eca|# &|' requirements.txt
 	sed -i 's|django-tenants@ git+https://github.com/rissson/django-tenants.git@a7f37c53f62f355a00142473ff1e3451bb794eca|# &|' requirements-dev.txt
-
+	pip install --no-cache-dir psycopg structlog pyyaml django
 echo "Installation complete."
 #####
 
@@ -205,6 +209,9 @@ npm install -g npm@10.8.2
 # Navigate to the directory where package.json is located
 cd "$SRC_DIR/web"
 
+echo "Modifying puppeteer-core ws dependency version..."
+sed -i 's|"ws": "8.13.0"|"ws": "8.17.1"|' package-lock.json
+
 # Install dependencies and attempt to fix vulnerabilities
 npm i
 npm audit fix
@@ -215,6 +222,11 @@ npm audit
 # Continue with other build processes
 npm run build
 npm audit fix
+
+cd "$SRC_DIR/website"
+npm i
+npm audit fix
+npm audit
 # Ensure all steps are executed without errors
 set -e
 
