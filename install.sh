@@ -79,10 +79,6 @@ else
   echo "User 'authentik' already exists, skipping creation..."
 fi
 
-systemctl daemon-reload && \
-  systemctl enable postgresql redis-server && \
-  systemctl start postgresql redis-server.service
-
 # if ! python3 -c 'import sys; sys.exit(sys.version_info < (3, 12, 1))' &>/dev/null
 # then
 # 	wget -qO- https://www.python.org/ftp/python/3.12.1/Python-3.12.1.tgz | tar -zxf -
