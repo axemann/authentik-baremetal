@@ -46,7 +46,7 @@ apt update && \
 apt upgrade -y
 
 apt install -y \
-  software-properties-common
+  software-properties-common \
   git \
   wget \
   build-essential \
