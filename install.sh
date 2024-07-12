@@ -39,14 +39,13 @@ PATH="${BIN_DIR}:${PATH}"
 cd "$BASE_DIR"
 
 apt update && \
-apt install -y \
-  software-properties-common
-apt remove python3 -y
+# apt install -y \
+#   software-properties-common
+# apt remove python3 -y
 add-apt-repository -yP ppa:deadsnakes/ppa && \
 apt upgrade -y
 
 apt install -y \
-  python3.12 \
   python3-virtualenv \
   git \
   pip \
@@ -102,7 +101,7 @@ then
 	wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
 	export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
 	[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
-	nvm install v21
+	nvm install v22
 fi
 
 if ! command -v go &>/dev/null
@@ -200,10 +199,10 @@ echo "Installation complete."
 ####
 
 # Update npm to the latest version
-npm install -g npm@10.7.0
+npm install -g npm@10.8.2
 
 # Navigate to the directory where package.json is located
-cd "$SRC_DIR/website"
+cd "$SRC_DIR/web"
 
 # Install dependencies and attempt to fix vulnerabilities
 npm i
